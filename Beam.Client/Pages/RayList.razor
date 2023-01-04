@@ -1,43 +1,51 @@
-@page "/frequency/{id}"
+@page "/frequency/{id:int}"
 @inject DataService data
 
 
-<p>
-    <div class="card">
-        <div class="card-body">
-            <span class="card-title">Cast a New Ray:</span>
-            <div class="input-group">
-                <input @bind="newRayText" class="form-control" />
-                <div class="input-group-append">
-                    <button @onclick="CastRay" type="button" class="btn btn-outline-secondary"><span class="oi oi-audio"></span></button>
-                </div>
-            </div>
-        </div>
-    </div>
-</p>
-@foreach (var ray in data.Rays)
+
+
+<RayInput @bind-newRayText="newRayText" @bind-newRayCasted="newRayCasted" />
+
+
+@if (data.Rays.Any())
 {
-    <p>
-        <RayItem ray="@ray" />
-    </p>
+    @foreach (var ray in data.Rays)
+    {
+        <p>
+            <RayItem ray="@ray" />
+        </p>
+    }
+}
+else
+{
+    <div class="spinner-border"></div>
 }
 
 
-@code{
+@code {
     [Parameter]
-    public string Id { get; set; }
+    public int Id { get; set; }
+
+    [Parameter]
 
     public string newRayText { get; set; }
 
+    public bool newRayCasted { get; set; }
+
     protected override void OnParametersSet()
     {
-        data.UpdatedRays += StateHasChanged;
-        data.SelectedFrequency = Int32.Parse(Id);
+        data.UpdatedRays += UpdateForNewRays;
+        data.SelectedFrequency = Id;
+        newRayCasted = false;
     }
-    
-    async Task CastRay()
+
+    private void UpdateForNewRays()
     {
-        await data.CreateRay(newRayText);
-        newRayText = "";
+        if (!data.Rays.Any(r => r.UserName == data.CurrentUser.Name))
+        {
+            newRayText = "hahaha";
+
+        }
+        StateHasChanged();
     }
 }

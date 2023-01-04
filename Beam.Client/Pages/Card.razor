@@ -1,0 +1,26 @@
+<div class="card">
+  @if (IsTitlePresent)
+  {
+    <div class="card-header">@Title</div>
+
+  }
+  <div class="card-body">
+    @ChildContent
+  </div>
+</div>
+
+@code {
+  [Parameter]
+  public RenderFragment ChildContent { get; set; }
+
+  [Parameter]
+  public string Title { get; set; }
+
+  private bool IsTitlePresent { get; set; }
+
+  protected override void OnParametersSet()
+  {
+    bool.TryParse(Title, out bool IsTitlePresent);
+
+  }
+}

@@ -1,0 +1,52 @@
+@inject DataService data;
+
+<p>
+    <Card Title="Case a New Ray:">
+
+        <span class="card-title">Cast a New Ray:</span>
+        <div class="input-group">
+            @if (newRayCasted)
+            {
+                <div class="spinner-border"></div>
+
+            }
+            else
+            {
+                <input @bind="newRayText" class="form-control" />
+                <div class="input-group-append">
+                    <button @onclick="CastRay" type="button" class="btn btn-outline-secondary"><span
+                        class="oi oi-audio"></span></button>
+                    <button @onclick="ClearText" type="button" class="btn btn-outline-secondary"><span
+                        class="oi oi-circle-x"></span></button>
+                </div>
+            }
+        </div>
+    </Card>
+</p>
+
+@code {
+    [Parameter]
+    public string newRayText { get; set; }
+    [Parameter]
+    public bool newRayCasted { get; set; }
+
+    [Parameter]
+    public EventCallback<string> newRayTextChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> newRayCastedChanged { get; set; }
+
+
+    async Task CastRay()
+    {
+        newRayCasted = true;
+        await data.CreateRay(newRayText);
+        newRayText = "";
+        StateHasChanged();
+    }
+
+    void ClearText()
+    {
+        newRayText = "";
+    }
+}
