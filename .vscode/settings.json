@@ -1,0 +1,7 @@
+{
+  "cSpell.enableFiletypes": ["aspnetcorerazor"],
+  "[aspnetcorerazor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "editor.formatOnSave": true
+}

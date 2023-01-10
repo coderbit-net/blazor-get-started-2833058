@@ -2,18 +2,15 @@
 @inject DataService data
 
 
-
-
-<RayInput @bind-newRayText="newRayText" @bind-newRayCasted="newRayCasted" />
-
+<RayInput @bind-newRayText="newRayText" />
 
 @if (data.Rays.Any())
 {
     @foreach (var ray in data.Rays)
     {
         <p>
-            <RayItem ray="@ray" />
-        </p>
+    <RayItem ray="@ray"></RayItem>
+</p>
     }
 }
 else
@@ -30,20 +27,17 @@ else
 
     public string newRayText { get; set; }
 
-    public bool newRayCasted { get; set; }
-
     protected override void OnParametersSet()
     {
         data.UpdatedRays += UpdateForNewRays;
         data.SelectedFrequency = Id;
-        newRayCasted = false;
     }
 
     private void UpdateForNewRays()
     {
         if (!data.Rays.Any(r => r.UserName == data.CurrentUser.Name))
         {
-            newRayText = "hahaha";
+            newRayText = $"Hello from, {data.CurrentUser.Name}";
 
         }
         StateHasChanged();

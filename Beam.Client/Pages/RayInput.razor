@@ -14,11 +14,11 @@
             {
                 <input @bind="newRayText" class="form-control" />
                 <div class="input-group-append">
-                    <button @onclick="CastRay" type="button" class="btn btn-outline-secondary"><span
+                <button @onclick="CastRay" type="button" class="btn btn-outline-secondary"><span
                         class="oi oi-audio"></span></button>
-                    <button @onclick="ClearText" type="button" class="btn btn-outline-secondary"><span
+                <button @onclick="ClearText" type="button" class="btn btn-outline-secondary"><span
                         class="oi oi-circle-x"></span></button>
-                </div>
+            </div>
             }
         </div>
     </Card>
@@ -26,21 +26,20 @@
 
 @code {
     [Parameter]
+
     public string newRayText { get; set; }
-    [Parameter]
-    public bool newRayCasted { get; set; }
 
     [Parameter]
     public EventCallback<string> newRayTextChanged { get; set; }
 
-    [Parameter]
-    public EventCallback<bool> newRayCastedChanged { get; set; }
-
+    private bool newRayCasted { get; set; } = false;
 
     async Task CastRay()
     {
         newRayCasted = true;
         await data.CreateRay(newRayText);
+        newRayCasted = false;
+
         newRayText = "";
         StateHasChanged();
     }

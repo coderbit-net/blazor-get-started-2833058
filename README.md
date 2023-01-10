@@ -37,7 +37,7 @@ Some branches will have a beginning and an end state. These are marked with the 
 
    OR
 
-   `docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=@#^!fcIen&*asd" -p 1433:1433 --name sql -d mcr.microsoft.com/mssql/server`
+   `docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=@#^fcIen&*asd" -p 1433:1433 --name sql -d mcr.microsoft.com/mssql/server`
 
    to run the sql server docker container
 
